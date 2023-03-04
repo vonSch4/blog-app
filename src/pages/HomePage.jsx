@@ -12,6 +12,7 @@ function HomePage() {
 
   const loading = useSelector((state) => state.articles.isLoading);
   const error = useSelector((state) => state.articles.error);
+  const isError = useSelector((state) => state.articles.isError);
 
   const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
@@ -20,9 +21,9 @@ function HomePage() {
     dispatch(fetchArticles({ offset: (currentPage - 1) * 5 }));
   }, [dispatch, currentPage]);
 
-  const showError = error !== null && <ErrorMessage error={error} />;
+  const showError = error !== null && isError && <ErrorMessage error={error} />;
   const showSpinner = loading && <LoaderSpinner />;
-  const hasData = !(loading || error);
+  const hasData = !(loading || isError);
   const showContent = hasData && <CardList />;
 
   return (

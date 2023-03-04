@@ -1,5 +1,11 @@
 import { format } from 'date-fns';
 
+function filterTagsList(tag, index) {
+  if (index > 8) return false;
+  if (tag.trim()) return true;
+  return false;
+}
+
 function transformArticleData(article) {
   const {
     slug,
@@ -19,7 +25,7 @@ function transformArticleData(article) {
     description: description?.trim(),
     body: body?.trim(),
     createdAt: format(new Date(createdAt), 'PP'),
-    tagList: tagList.slice(0, 10),
+    tagList: tagList.filter(filterTagsList),
     favorited,
     favoritesCount,
     author,

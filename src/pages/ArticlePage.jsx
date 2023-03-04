@@ -13,14 +13,15 @@ function ArticlePage() {
 
   const loading = useSelector((state) => state.article.isLoading);
   const error = useSelector((state) => state.article.error);
+  const isError = useSelector((state) => state.article.isError);
 
   useEffect(() => {
     dispatch(fetchArticle(params));
   }, [dispatch, params]);
 
-  const showError = error !== null && <ErrorMessage error={error} />;
+  const showError = error !== null && isError && <ErrorMessage error={error} />;
   const showSpinner = loading && <LoaderSpinner />;
-  const hasData = !(loading || error);
+  const hasData = !(loading || isError);
   const showContent = hasData && <Article />;
 
   return (
