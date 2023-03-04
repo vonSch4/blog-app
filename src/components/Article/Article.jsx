@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
@@ -7,10 +7,13 @@ import unlikedIcon from '../../assets/image/like.svg';
 import likedIcon from '../../assets/image/like-active.svg';
 import defaultUserAvatar from '../../assets/image/user-image.png';
 import transformArticleData from '../../mappers';
+import LoaderSpinner from '../LoaderSpinner';
 
 import styles from './Article.module.scss';
 
 function Article() {
+  const [imgLoading, setImgLoading] = useState(true);
+
   const article = useSelector((state) => state.article.article);
 
   const transformedArticle = transformArticleData(article);
@@ -57,10 +60,16 @@ function Article() {
             <br />
             <span className={styles.postDate}>{createdAt}</span>
           </div>
+          {imgLoading && <LoaderSpinner />}
           <img
             className={styles.userAvatar}
+            style={imgLoading ? { display: 'none' } : {}}
             src={author.image || defaultUserAvatar}
             alt='Avatar'
+            onError={(e) => {
+              e.target.src = defaultUserAvatar;
+            }}
+            onLoad={() => setImgLoading(false)}
           />
         </div>
       </div>

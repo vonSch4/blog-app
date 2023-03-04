@@ -20,7 +20,7 @@ function ArticlePage() {
   }, [dispatch, params]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
-  const showSpinner = loading && <LoaderSpinner />;
+  const showSpinner = loading && <LoaderSpinner text='Загрузка статьи...' />;
   const hasData = !(loading || isError);
   const showContent = hasData && <Article />;
 

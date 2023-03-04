@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
 function filterTagsList(tag, index) {
-  if (index > 8) return false;
+  if (index > 8 || !tag) return false;
   if (tag.trim()) return true;
   return false;
 }

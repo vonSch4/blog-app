@@ -16,7 +16,7 @@
 
 .cardInfo {
   display: flex;
-  width: 70%;
+  max-width: 80%;
   flex-direction: column;
   margin-right: auto;
 }
@@ -24,12 +24,20 @@
 .title {
   display: flex;
   gap: 15px;
-  margin-bottom: 10px
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 a.titleText {
+  max-width: 92%;
   font-size: 22px;
   color: #1890FF;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 a.titleText:visited {
@@ -69,12 +77,26 @@ a.titleText:visited {
   padding: 5px;
   border: 1px solid gray;
   border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.cardText {
+  margin-top: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow-wrap: break-word;
+}
 
 .userInfo {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
+  gap: 15px;
 }
 
 .userName {
@@ -90,5 +112,4 @@ a.titleText:visited {
   height: 45px;
   border-radius: 50%;
   object-fit: cover;
-  margin-left: 15px;
 }

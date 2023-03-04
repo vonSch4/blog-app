@@ -22,7 +22,7 @@ function HomePage() {
   }, [dispatch, currentPage]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
-  const showSpinner = loading && <LoaderSpinner />;
+  const showSpinner = loading && <LoaderSpinner text='Загрузка статей...' />;
   const hasData = !(loading || isError);
   const showContent = hasData && <CardList />;
 
