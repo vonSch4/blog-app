@@ -14,12 +14,14 @@ function HomePage() {
   const error = useSelector((state) => state.articles.error);
   const isError = useSelector((state) => state.articles.isError);
 
+  const token = useSelector((state) => state.user.user.token);
+
   const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
-    dispatch(fetchArticles({ offset: (currentPage - 1) * 5 }));
-  }, [dispatch, currentPage]);
+    dispatch(fetchArticles({ offset: (currentPage - 1) * 5, token }));
+  }, [dispatch, currentPage, token]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
   const showSpinner = loading && <LoaderSpinner text='Загрузка статей...' />;

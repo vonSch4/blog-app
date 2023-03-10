@@ -12,9 +12,11 @@ function EditProfileForm() {
   const dispatch = useDispatch();
 
   const serverError = useSelector((state) => state.user.error?.errors);
+
   const currentUserName = useSelector((state) => state.user.user.username);
   const currentEmail = useSelector((state) => state.user.user.email);
   const currentImage = useSelector((state) => state.user.user?.image);
+
   const token = useSelector((state) => state.user.user.token);
 
   const [url, setUrl] = useState();
@@ -27,7 +29,7 @@ function EditProfileForm() {
     handleSubmit,
     setError,
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     defaultValues: {
       username: currentUserName,
       email: currentEmail,

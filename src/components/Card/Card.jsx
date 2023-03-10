@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import unlikedIcon from '../../assets/image/like.svg';
-import likedIcon from '../../assets/image/like-active.svg';
 import defaultUserAvatar from '../../assets/image/user-image.png';
 import transformArticleData from '../../mappers';
 import LoaderSpinner from '../LoaderSpinner';
+import {
+  deleteLikesArticle,
+  setLikesArticle,
+} from '../../store/slices/articleSlice';
 
 import styles from './Card.module.scss';
 
 function Card(props) {
-  const [imgLoading, setImgLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const { article } = props;
   const transformedArticle = transformArticleData(article);
-
   const {
     slug,
     title,
@@ -33,7 +35,29 @@ function Card(props) {
     </li>
   ));
 
-  const likeIcon = favorited ? likedIcon : unlikedIcon;
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const token = useSelector((state) => state.user.user.token);
+
+  const [liked, setLiked] = useState(favorited);
+  const [likeCount, setLikeCount] = useState(favoritesCount);
+  const [imgLoading, setImgLoading] = useState(true);
+
+  useEffect(() => {
+    setLiked(favorited);
+  }, [favorited]);
+
+  const likesHandler = () => {
+    if (!liked) {
+      setLikeCount((l) => l + 1);
+      setLiked(true);
+      dispatch(setLikesArticle({ slug, token }));
+    }
+    if (liked) {
+      setLikeCount((l) => l - 1);
+      setLiked(false);
+      dispatch(deleteLikesArticle({ slug, token }));
+    }
+  };
 
   return (
     <li className={styles.card}>
@@ -42,10 +66,15 @@ function Card(props) {
           <Link to={`/articles/${slug}`} className={styles.titleText}>
             {title}
           </Link>
-          <button className={styles.likeBtn} type='button'>
-            <img className={styles.likeIcon} src={likeIcon} alt='Like' />
-            <span className={styles.likeCount}>{favoritesCount}</span>
-          </button>
+          <label className={styles.likeBtn}>
+            <input
+              type='checkbox'
+              disabled={!isLogin}
+              onChange={likesHandler}
+              checked={liked}
+            />
+            <span>{likeCount}</span>
+          </label>
         </div>
         {!!tags.length && <ul className={styles.tagsList}>{tags}</ul>}
         <p className={styles.cardText}>{description}</p>

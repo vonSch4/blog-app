@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 
-import unlikedIcon from '../../assets/image/like.svg';
-import likedIcon from '../../assets/image/like-active.svg';
 import defaultUserAvatar from '../../assets/image/user-image.png';
 import transformArticleData from '../../mappers';
 import LoaderSpinner from '../LoaderSpinner';
+import {
+  deleteLikesArticle,
+  setLikesArticle,
+} from '../../store/slices/articleSlice';
 
 import styles from './Article.module.scss';
 
 function Article() {
-  const [imgLoading, setImgLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const article = useSelector((state) => state.article.article);
-
   const transformedArticle = transformArticleData(article);
-
   const {
+    slug,
     title,
     description,
     body,
@@ -35,7 +36,29 @@ function Article() {
     </li>
   ));
 
-  const likeIcon = favorited ? likedIcon : unlikedIcon;
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const token = useSelector((state) => state.user.user.token);
+
+  const [liked, setLiked] = useState(favorited);
+  const [likeCount, setLikeCount] = useState(favoritesCount);
+  const [imgLoading, setImgLoading] = useState(true);
+
+  useEffect(() => {
+    setLiked(favorited);
+  }, [favorited]);
+
+  const likesHandler = () => {
+    if (!liked) {
+      setLikeCount((l) => l + 1);
+      setLiked(true);
+      dispatch(setLikesArticle({ slug, token }));
+    }
+    if (liked) {
+      setLikeCount((l) => l - 1);
+      setLiked(false);
+      dispatch(deleteLikesArticle({ slug, token }));
+    }
+  };
 
   return (
     <div className={styles.article}>
@@ -43,10 +66,15 @@ function Article() {
         <div className={styles.articleInfo}>
           <div className={styles.title}>
             <h1 className={styles.titleText}>{title}</h1>
-            <button className={styles.likeBtn} type='button'>
-              <img className={styles.likeIcon} src={likeIcon} alt='Like' />
-              <span className={styles.likeCount}>{favoritesCount}</span>
-            </button>
+            <label className={styles.likeBtn}>
+              <input
+                type='checkbox'
+                disabled={!isLogin}
+                onChange={likesHandler}
+                checked={liked}
+              />
+              <span>{likeCount}</span>
+            </label>
           </div>
           <ul className={styles.tagsList}>{tags}</ul>
           <p className={styles.description}>{description}</p>

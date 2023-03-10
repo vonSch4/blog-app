@@ -7,7 +7,7 @@ function getItem(name) {
     return JSON.parse(localStorage.getItem(name));
   } catch {
     localStorage.removeItem(name);
-    return false;
+    return null;
   }
 }
 

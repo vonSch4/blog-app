@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     if (token) dispatch(getUser({ token }));
-  }, []);
+  }, [dispatch, token]);
 
   return (
     <Routes>

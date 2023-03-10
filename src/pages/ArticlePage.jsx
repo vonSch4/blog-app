@@ -9,15 +9,17 @@ import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
 
 function ArticlePage() {
   const dispatch = useDispatch();
-  const params = useParams();
+  const { slug } = useParams();
 
   const loading = useSelector((state) => state.article.isLoading);
   const error = useSelector((state) => state.article.error);
   const isError = useSelector((state) => state.article.isError);
 
+  const token = useSelector((state) => state.user.user.token);
+
   useEffect(() => {
-    dispatch(fetchArticle(params));
-  }, [dispatch, params]);
+    dispatch(fetchArticle({ slug, token }));
+  }, [dispatch, slug, token]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
   const showSpinner = loading && <LoaderSpinner text='Загрузка статьи...' />;

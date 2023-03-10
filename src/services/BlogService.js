@@ -11,29 +11,55 @@ class BlogService {
     },
   });
 
-  async getArticles({ offset }) {
-    try {
-      const articles = await this.blogAPI.get('/articles', {
-        params: {
-          limit: 5,
-          offset,
-        },
-      });
+  async getArticles({ offset, token }) {
+    const articles = await this.blogAPI.get('/articles', {
+      params: {
+        limit: 5,
+        offset,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      return articles;
-    } catch (error) {
-      throw error.toJSON();
-    }
+    return articles;
   }
 
-  async getArticle({ slug }) {
-    try {
-      const article = await this.blogAPI.get(`/articles/${slug}`);
+  async getArticle({ slug, token }) {
+    const article = await this.blogAPI.get(`/articles/${slug}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      return article;
-    } catch (error) {
-      throw error.toJSON();
-    }
+    return article;
+  }
+
+  async setLikesArticle({ slug, token }) {
+    const likedArticle = await this.blogAPI.post(
+      `/articles/${slug}/favorite`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return likedArticle;
+  }
+
+  async deleteLikesArticle({ slug, token }) {
+    const unlikedArticle = await this.blogAPI.delete(
+      `/articles/${slug}/favorite`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return unlikedArticle;
   }
 
   async registerNewUser(data) {
@@ -50,9 +76,7 @@ class BlogService {
     return user;
   }
 
-  async loginUser(data) {
-    const { email, password } = data;
-
+  async loginUser({ email, password }) {
     const user = await this.blogAPI.post('/users/login', {
       user: {
         email,
