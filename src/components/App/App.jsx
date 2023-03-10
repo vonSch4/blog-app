@@ -14,11 +14,11 @@ import Layout from '../Layout';
 
 function App() {
   const dispatch = useDispatch();
-  const token = getItem('token');
+  const savedToken = getItem('token');
 
   useEffect(() => {
-    if (token) dispatch(getUser({ token }));
-  }, [dispatch, token]);
+    if (savedToken) dispatch(getUser({ token: savedToken }));
+  }, [dispatch, savedToken]);
 
   return (
     <Routes>

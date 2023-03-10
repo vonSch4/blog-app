@@ -73,10 +73,14 @@ const userSlice = createSlice({
     user: {},
     isLogin: false,
     isLoading: false,
+    isUpdated: false,
     isError: false,
     error: null,
   },
   reducers: {
+    clearUpdate: (state) => {
+      state.isUpdated = false;
+    },
     clearError: (state) => {
       state.isError = false;
       state.error = null;
@@ -85,6 +89,7 @@ const userSlice = createSlice({
       state.user = {};
       state.isLogin = false;
       state.isLoading = false;
+      state.isUpdated = false;
       state.isError = false;
       state.error = null;
     },
@@ -135,12 +140,14 @@ const userSlice = createSlice({
     });
 
     builder.addCase(updateProfileUser.pending, (state) => {
+      state.isUpdated = false;
       state.isLoading = true;
       state.isError = false;
       state.error = null;
     });
 
     builder.addCase(updateProfileUser.fulfilled, (state, action) => {
+      state.isUpdated = true;
       state.isLoading = false;
       state.isError = false;
       state.error = null;
@@ -148,6 +155,7 @@ const userSlice = createSlice({
     });
 
     builder.addCase(updateProfileUser.rejected, (state, action) => {
+      state.isUpdated = false;
       state.isLoading = false;
       state.isError = true;
       state.error = action.payload;
@@ -177,6 +185,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearError, logOut } = userSlice.actions;
+export const { clearUpdate, clearError, logOut } = userSlice.actions;
 
 export default userSlice.reducer;

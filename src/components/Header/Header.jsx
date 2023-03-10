@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import defaultUserAvatar from '../../assets/image/user-image.png';
 import { logOut } from '../../store/slices/userSlice';
-import { clearItem } from '../../storage/storage';
+import { clearItem, getItem } from '../../storage/storage';
 
 import styles from './Header.module.scss';
 
@@ -16,6 +16,8 @@ function Header() {
   const isLogin = useSelector((state) => state.user.isLogin);
   const user = useSelector((state) => state.user.user);
   const image = useSelector((state) => state.user.user?.image);
+
+  const savedToken = getItem('token');
 
   if (isLogin) {
     return (
@@ -66,21 +68,25 @@ function Header() {
         MyBlog
       </Link>
 
-      <Link
-        className={classNames(styles.signInLink, styles.link)}
-        to='sign-in'
-        state={{ from: location }}
-      >
-        Sign In
-      </Link>
+      {!!savedToken || (
+        <Link
+          className={classNames(styles.signInLink, styles.link)}
+          to='sign-in'
+          state={{ from: location }}
+        >
+          Sign In
+        </Link>
+      )}
 
-      <Link
-        className={classNames(styles.signUpLink, styles.link)}
-        to='sign-up'
-        state={{ from: location }}
-      >
-        Sign Up
-      </Link>
+      {!!savedToken || (
+        <Link
+          className={classNames(styles.signUpLink, styles.link)}
+          to='sign-up'
+          state={{ from: location }}
+        >
+          Sign Up
+        </Link>
+      )}
     </header>
   );
 }
