@@ -28,7 +28,7 @@ function HomePage() {
         token: token || savedToken,
       })
     );
-  }, [dispatch, currentPage, savedToken, token]);
+  }, [dispatch, currentPage]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
   const showSpinner = loading && <LoaderSpinner text='Загрузка статей...' />;
