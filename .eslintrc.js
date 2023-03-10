@@ -43,6 +43,8 @@ module.exports = {
     'no-param-reassign': ['error', { props: false }],
     'import/no-unresolved': [2, { caseSensitive: false }],
     'no-underscore-dangle': ['error', { allowAfterThis: true }],
+    'jsx-a11y/label-has-associated-control': [2, {"assert": "either",}],
+    "react/jsx-props-no-spreading": [2, {"html": "ignore"}],
     'import/order': [
       2,
       {

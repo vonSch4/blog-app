@@ -18,9 +18,9 @@ function CardList() {
     setSearchParams({ page: selected + 1 });
   };
 
-  const cards = articles.map((article) => {
-    return <Card key={article.slug} article={article} />;
-  });
+  const cards = articles.map((article) => (
+    <Card key={article.slug} article={article} />
+  ));
 
   return (
     <>

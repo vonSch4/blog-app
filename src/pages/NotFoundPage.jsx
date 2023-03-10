@@ -6,7 +6,7 @@ function NotFoundPage() {
     <>
       <div>Sorry, page not found</div>
       <div>
-        Do you want to return to the <Link to='./articles'>main page</Link>?
+        Do you want to return to the <Link to='articles'>main page</Link>?
       </div>
     </>
   );

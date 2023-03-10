@@ -28,11 +28,13 @@ const articleSlice = createSlice({
     builder.addCase(fetchArticle.pending, (state) => {
       state.isLoading = true;
       state.isError = false;
+      state.error = null;
     });
 
     builder.addCase(fetchArticle.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
+      state.error = null;
       state.article = action.payload.article;
     });
 

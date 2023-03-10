@@ -35,6 +35,66 @@ class BlogService {
       throw error.toJSON();
     }
   }
+
+  async registerNewUser(data) {
+    const { username, email, password } = data;
+
+    const user = await this.blogAPI.post('/users', {
+      user: {
+        username,
+        email,
+        password,
+      },
+    });
+
+    return user;
+  }
+
+  async loginUser(data) {
+    const { email, password } = data;
+
+    const user = await this.blogAPI.post('/users/login', {
+      user: {
+        email,
+        password,
+      },
+    });
+
+    return user;
+  }
+
+  async updateProfileUser({ data, token }) {
+    const { email, password, username, image } = data;
+
+    const updatedUser = await this.blogAPI.put(
+      '/user',
+      {
+        user: {
+          email,
+          password,
+          username,
+          image,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return updatedUser;
+  }
+
+  async getUser({ token }) {
+    const user = await this.blogAPI.get('/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return user;
+  }
 }
 
 export default new BlogService();

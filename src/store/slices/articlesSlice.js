@@ -23,20 +23,17 @@ const articlesSlice = createSlice({
     isError: false,
     error: null,
   },
-  reducers: {
-    setCurrentOffset: (state, action) => {
-      state.currentOffset = action.payload;
-    },
-  },
   extraReducers: (builder) => {
     builder.addCase(fetchArticles.pending, (state) => {
       state.isLoading = true;
       state.isError = false;
+      state.error = null;
     });
 
     builder.addCase(fetchArticles.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
+      state.error = null;
       state.articles = action.payload.articles;
       state.articlesCount = action.payload.articlesCount;
     });
@@ -48,7 +45,5 @@ const articlesSlice = createSlice({
     });
   },
 });
-
-export const { setCurrentOffset } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

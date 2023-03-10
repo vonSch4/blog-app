@@ -29,13 +29,11 @@ function Article() {
     author,
   } = transformedArticle;
 
-  const tags = tagList.map((tag) => {
-    return (
-      <li key={nanoid()} className={styles.tag}>
-        {tag.trim()}
-      </li>
-    );
-  });
+  const tags = tagList.map((tag) => (
+    <li key={nanoid()} className={styles.tag}>
+      {tag.trim()}
+    </li>
+  ));
 
   const likeIcon = favorited ? likedIcon : unlikedIcon;
 

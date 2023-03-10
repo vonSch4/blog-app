@@ -25,7 +25,7 @@ function transformArticleData(article) {
     description: description?.trim(),
     body: body?.trim(),
     createdAt: format(new Date(createdAt), 'PP'),
-    tagList: tagList.filter(filterTagsList),
+    tagList: tagList?.filter(filterTagsList),
     favorited,
     favoritesCount,
     author,
