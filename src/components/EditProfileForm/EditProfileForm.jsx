@@ -45,7 +45,19 @@ function EditProfileForm() {
   });
 
   const onSubmit = (data) => {
-    dispatch(updateProfileUser({ data, token }));
+    const { email, password, username, image } = data;
+
+    const sendData = {
+      email,
+      username,
+      image,
+    };
+
+    if (password) {
+      sendData.password = password;
+    }
+
+    dispatch(updateProfileUser({ data: sendData, token }));
   };
 
   useEffect(() => {
@@ -171,10 +183,10 @@ function EditProfileForm() {
               type='password'
               placeholder='Password'
               {...register('password', {
-                required: {
-                  value: true,
-                  message: 'The field is required.',
-                },
+                // required: {
+                //   value: true,
+                //   message: 'The field is required.',
+                // },
                 minLength: {
                   value: 6,
                   message: 'The password must be at least 6 characters long.',

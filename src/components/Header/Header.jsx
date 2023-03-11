@@ -15,7 +15,7 @@ function Header() {
 
   const isLogin = useSelector((state) => state.user.isLogin);
   const user = useSelector((state) => state.user.user);
-  const image = useSelector((state) => state.user.user?.image);
+  const image = useSelector((state) => state.user?.user?.image);
 
   const savedToken = getItem('token');
 
