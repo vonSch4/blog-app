@@ -41,15 +41,47 @@ export const deleteLikesArticle = createAsyncThunk(
   }
 );
 
+export const createNewArticle = createAsyncThunk(
+  'article/createNewArticle',
+  async (params, { rejectWithValue }) => {
+    try {
+      const newArticle = await blogService.createNewArticle(params);
+
+      return newArticle.data;
+    } catch ({ message, name }) {
+      return rejectWithValue({ message, name });
+    }
+  }
+);
+
+export const updateArticle = createAsyncThunk(
+  'article/updateArticle',
+  async (params, { rejectWithValue }) => {
+    try {
+      const updatedArticle = await blogService.updateArticle(params);
+
+      return updatedArticle.data;
+    } catch ({ message, name }) {
+      return rejectWithValue({ message, name });
+    }
+  }
+);
+
 const articleSlice = createSlice({
   name: 'article',
   initialState: {
     article: {},
     isLoading: true,
+    isCreated: false,
+    isLoadingCreate: false,
     isError: false,
     error: null,
   },
-
+  reducers: {
+    resetIsCreated: (state) => {
+      state.isCreated = false;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchArticle.pending, (state) => {
       state.isLoading = true;
@@ -99,7 +131,51 @@ const articleSlice = createSlice({
       state.isError = true;
       state.error = action.payload;
     });
+
+    builder.addCase(createNewArticle.pending, (state) => {
+      state.isLoadingCreate = true;
+      state.isCreated = false;
+      state.isError = false;
+      state.error = null;
+    });
+
+    builder.addCase(createNewArticle.fulfilled, (state) => {
+      state.isLoadingCreate = false;
+      state.isCreated = true;
+      state.isError = false;
+      state.error = null;
+    });
+
+    builder.addCase(createNewArticle.rejected, (state, action) => {
+      state.isLoadingCreate = false;
+      state.isCreated = false;
+      state.isError = true;
+      state.error = action.payload;
+    });
+
+    builder.addCase(updateArticle.pending, (state) => {
+      state.isLoadingCreate = true;
+      state.isCreated = false;
+      state.isError = false;
+      state.error = null;
+    });
+
+    builder.addCase(updateArticle.fulfilled, (state) => {
+      state.isLoadingCreate = false;
+      state.isCreated = true;
+      state.isError = false;
+      state.error = null;
+    });
+
+    builder.addCase(updateArticle.rejected, (state, action) => {
+      state.isLoadingCreate = false;
+      state.isCreated = false;
+      state.isError = true;
+      state.error = action.payload;
+    });
   },
 });
+
+export const { resetIsCreated } = articleSlice.actions;
 
 export default articleSlice.reducer;

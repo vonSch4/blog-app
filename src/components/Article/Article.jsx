@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 
 import defaultUserAvatar from '../../assets/image/user-image.png';
 import transformArticleData from '../../mappers';
@@ -17,6 +18,8 @@ function Article() {
   const dispatch = useDispatch();
 
   const article = useSelector((state) => state.article.article);
+  const username = useSelector((state) => state.user.user.username);
+
   const transformedArticle = transformArticleData(article);
   const {
     slug,
@@ -81,22 +84,34 @@ function Article() {
         </div>
 
         <div className={styles.userInfo}>
-          <div>
-            <span className={styles.userName}>{author.username}</span>
-            <br />
-            <span className={styles.postDate}>{createdAt}</span>
+          <div className={styles.userInfoContainer}>
+            <div>
+              <span className={styles.userName}>{author.username}</span>
+              <br />
+              <span className={styles.postDate}>{createdAt}</span>
+            </div>
+            {imgLoading && <LoaderSpinner />}
+            <img
+              className={styles.userAvatar}
+              style={imgLoading ? { display: 'none' } : {}}
+              src={author.image || defaultUserAvatar}
+              alt='Avatar'
+              onError={(e) => {
+                e.target.src = defaultUserAvatar;
+              }}
+              onLoad={() => setImgLoading(false)}
+            />
           </div>
-          {imgLoading && <LoaderSpinner />}
-          <img
-            className={styles.userAvatar}
-            style={imgLoading ? { display: 'none' } : {}}
-            src={author.image || defaultUserAvatar}
-            alt='Avatar'
-            onError={(e) => {
-              e.target.src = defaultUserAvatar;
-            }}
-            onLoad={() => setImgLoading(false)}
-          />
+          {username === author.username && (
+            <div className={styles.buttonContainer}>
+              <Link to='delete' className={styles.btnDelete}>
+                Delete
+              </Link>
+              <Link to='edit' className={styles.btnEdit}>
+                Edit
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 

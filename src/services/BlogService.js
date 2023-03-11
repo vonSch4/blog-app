@@ -62,6 +62,52 @@ class BlogService {
     return unlikedArticle;
   }
 
+  async createNewArticle({ data, token }) {
+    const { title, description, body, tagList } = data;
+
+    const newArticle = await this.blogAPI.post(
+      '/articles',
+      {
+        article: {
+          title,
+          description,
+          body,
+          tagList,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return newArticle;
+  }
+
+  async updateArticle({ data, token, slug }) {
+    const { title, description, body, tagList } = data;
+
+    const newArticle = await this.blogAPI.put(
+      `/articles/${slug}`,
+      {
+        article: {
+          title,
+          description,
+          body,
+          tagList,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return newArticle;
+  }
+
   async registerNewUser(data) {
     const { username, email, password } = data;
 

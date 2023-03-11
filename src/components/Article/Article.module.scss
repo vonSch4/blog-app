@@ -94,9 +94,34 @@
 
 .userInfo {
   display: flex;
+  flex-direction: column;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-end;
   gap: 15px;
+}
+
+.userInfoContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.btnDelete {
+  color: #F5222D !important;
+  border: 1px solid #F5222D;
+  border-radius: 5px;
+  padding: 8px 15px;
+}
+
+.btnEdit {
+  color: #52C41A !important;
+  border: 1px solid #52C41A;
+  border-radius: 5px;
+  padding: 8px 15px;
 }
 
 .userName {

@@ -30,7 +30,7 @@ function Header() {
         </Link>
         <Link
           className={classNames(styles.createArticleLink, styles.link)}
-          to='create-article'
+          to='new-article'
         >
           Create article
         </Link>

@@ -27,7 +27,7 @@ function EditProfileForm() {
   const token = useSelector((state) => state.user.user.token);
 
   const [url, setUrl] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isValidUrl, setIsValidUrl] = useState(true);
 
   const {
@@ -72,7 +72,7 @@ function EditProfileForm() {
         message: 'This picture is invalid. Choose another one.',
       });
     }
-  }, [loading, setError, isValidUrl]);
+  }, [loading, isValidUrl, setError]);
 
   useEffect(() => {
     if (isUpdated) {
@@ -199,11 +199,12 @@ function EditProfileForm() {
                 onChange: (e) => {
                   setUrl(e.target.value);
                   setLoading(true);
+                  setIsValidUrl(true);
                 },
               })}
             />
             <span className={styles.inputErrorText}>
-              {errors?.image?.message}
+              {!isValidUrl ? errors?.image?.message : ''}
             </span>
           </label>
           <img
@@ -223,7 +224,7 @@ function EditProfileForm() {
           <input
             className={styles.inputSubmit}
             type='submit'
-            value='Save'
+            value={loading ? 'Image loading...' : 'Save'}
             disabled={url ? loading || !isValidUrl : false}
           />
           <span className={styles.inputErrorText}>
