@@ -93,6 +93,7 @@
 }
 
 .userInfo {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -111,6 +112,7 @@
 }
 
 .btnDelete {
+  position: relative;
   color: #F5222D !important;
   border: 1px solid #F5222D;
   border-radius: 5px;
@@ -193,4 +195,32 @@
 /* стили для чекбокса, находящегося в состоянии disabled */
 .likeBtn>input:disabled+span::before {
   background-image: url('../../assets/image/like.svg');
+}
+
+.deletePopup {
+  width: 250px;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0px 2px 20px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.popupText {
+  margin-bottom: 15px;
+}
+
+.btnNo {
+  border: 1px solid #D9D9D9;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 15px;
+  background-color: #fff;
+}
+
+.btnYes {
+  color: #fff;
+  background-color: #1890FF;
+  padding: 5px 10px;
+  border-radius: 5px;
 }

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Popup from 'reactjs-popup';
 
 import defaultUserAvatar from '../../assets/image/user-image.png';
 import transformArticleData from '../../mappers';
@@ -10,15 +11,20 @@ import LoaderSpinner from '../LoaderSpinner';
 import {
   deleteLikesArticle,
   setLikesArticle,
+  deleteArticle,
+  resetIsDeleted,
 } from '../../store/slices/articleSlice';
 
 import styles from './Article.module.scss';
 
 function Article() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const article = useSelector((state) => state.article.article);
   const username = useSelector((state) => state.user.user.username);
+  const isDeleted = useSelector((state) => state.article.isDeleted);
+  const isLoading = useSelector((state) => state.article.isLoading);
 
   const transformedArticle = transformArticleData(article);
   const {
@@ -50,6 +56,12 @@ function Article() {
     setLiked(favorited);
   }, [favorited]);
 
+  useEffect(() => {
+    if (isDeleted) navigate('/articles');
+
+    return () => dispatch(resetIsDeleted());
+  }, [dispatch, navigate, isDeleted]);
+
   const likesHandler = () => {
     if (!liked) {
       setLikeCount((l) => l + 1);
@@ -61,6 +73,10 @@ function Article() {
       setLiked(false);
       dispatch(deleteLikesArticle({ slug, token }));
     }
+  };
+
+  const delArticle = (data) => {
+    dispatch(deleteArticle(data));
   };
 
   return (
@@ -104,9 +120,36 @@ function Article() {
           </div>
           {username === author.username && (
             <div className={styles.buttonContainer}>
-              <Link to='delete' className={styles.btnDelete}>
-                Delete
-              </Link>
+              <Popup
+                trigger={
+                  <button type='button' className={styles.btnDelete}>
+                    Delete
+                  </button>
+                }
+              >
+                {(close) => (
+                  <div className={styles.deletePopup}>
+                    <div className={styles.popupText}>
+                      Are you sure to delete this article?
+                    </div>
+                    <button
+                      className={styles.btnNo}
+                      type='button'
+                      onClick={close}
+                    >
+                      No
+                    </button>
+                    <button
+                      className={styles.btnYes}
+                      type='button'
+                      onClick={() => delArticle({ slug, token })}
+                    >
+                      Yes
+                    </button>
+                  </div>
+                )}
+              </Popup>
+
               <Link to='edit' className={styles.btnEdit}>
                 Edit
               </Link>
@@ -118,6 +161,8 @@ function Article() {
       <div className={styles.articleBody}>
         <ReactMarkdown>{body}</ReactMarkdown>
       </div>
+
+      {isLoading && <LoaderSpinner />}
     </div>
   );
 }

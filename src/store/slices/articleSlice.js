@@ -67,6 +67,19 @@ export const updateArticle = createAsyncThunk(
   }
 );
 
+export const deleteArticle = createAsyncThunk(
+  'article/deleteArticle',
+  async (params, { rejectWithValue }) => {
+    try {
+      const deletedArticle = await blogService.deleteArticle(params);
+
+      return deletedArticle.data;
+    } catch ({ message, name }) {
+      return rejectWithValue({ message, name });
+    }
+  }
+);
+
 const articleSlice = createSlice({
   name: 'article',
   initialState: {
@@ -74,12 +87,16 @@ const articleSlice = createSlice({
     isLoading: true,
     isCreated: false,
     isLoadingCreate: false,
+    isDeleted: false,
     isError: false,
     error: null,
   },
   reducers: {
     resetIsCreated: (state) => {
       state.isCreated = false;
+    },
+    resetIsDeleted: (state) => {
+      state.isDeleted = false;
     },
   },
   extraReducers: (builder) => {
@@ -173,9 +190,30 @@ const articleSlice = createSlice({
       state.isError = true;
       state.error = action.payload;
     });
+
+    builder.addCase(deleteArticle.pending, (state) => {
+      state.isLoading = true;
+      state.isDeleted = false;
+      state.isError = false;
+      state.error = null;
+    });
+
+    builder.addCase(deleteArticle.fulfilled, (state) => {
+      state.isLoading = false;
+      state.isDeleted = true;
+      state.isError = false;
+      state.error = null;
+    });
+
+    builder.addCase(deleteArticle.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isDeleted = false;
+      state.isError = true;
+      state.error = action.payload;
+    });
   },
 });
 
-export const { resetIsCreated } = articleSlice.actions;
+export const { resetIsCreated, resetIsDeleted } = articleSlice.actions;
 
 export default articleSlice.reducer;

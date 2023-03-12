@@ -108,6 +108,16 @@ class BlogService {
     return newArticle;
   }
 
+  async deleteArticle({ slug, token }) {
+    const deletedArticle = await this.blogAPI.delete(`/articles/${slug}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return deletedArticle;
+  }
+
   async registerNewUser(data) {
     const { username, email, password } = data;
 
