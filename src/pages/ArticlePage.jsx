@@ -21,10 +21,8 @@ function ArticlePage() {
   const savedToken = getItem('token');
 
   useEffect(() => {
-    if (savedToken) dispatch(fetchArticle({ slug, token }));
-
-    if (!savedToken) dispatch(fetchArticle({ slug, token }));
-  }, [dispatch, slug, token, savedToken]);
+    dispatch(fetchArticle({ slug, token: token || savedToken }));
+  }, [dispatch, slug]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
   const showSpinner = loading && (
