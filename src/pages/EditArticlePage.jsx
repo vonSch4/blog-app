@@ -12,6 +12,8 @@ function EditArticlePage() {
   const { slug } = useParams();
   const dispatch = useDispatch();
 
+  const fromPath = location.state?.from?.pathname || '/articles';
+
   const savedToken = getItem('token');
   const isLogin = useSelector((state) => state.user.isLogin);
   const username = useSelector((state) => state.user.user.username);
@@ -33,7 +35,7 @@ function EditArticlePage() {
     }
 
     if (isCreated) {
-      navigate(-1, { state: { from: location }, replace: true });
+      navigate(fromPath, { state: { from: location }, replace: true });
       dispatch(resetIsCreated());
     }
   });

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 
 import defaultUserAvatar from '../../assets/image/user-image.png';
@@ -20,6 +20,7 @@ import styles from './Article.module.scss';
 function Article() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const article = useSelector((state) => state.article.article);
   const username = useSelector((state) => state.user.user.username);
@@ -149,7 +150,11 @@ function Article() {
                 )}
               </Popup>
 
-              <Link to='edit' className={styles.btnEdit}>
+              <Link
+                to='edit'
+                className={styles.btnEdit}
+                state={{ from: location }}
+              >
                 Edit
               </Link>
             </div>
