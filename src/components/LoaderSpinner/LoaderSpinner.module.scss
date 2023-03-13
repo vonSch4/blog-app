@@ -24,7 +24,10 @@
   align-items: center;
   justify-content: center;
   color: #4A4A4A;
-  margin-bottom: 25px;
+}
+
+.articleSpinner {
+  transform: translateY(50px);
 }
 
 .text {

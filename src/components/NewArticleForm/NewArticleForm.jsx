@@ -188,7 +188,9 @@ function NewArticleForm() {
           <input className={styles.inputSubmit} type='submit' value='Send' />
         </form>
       </div>
-      {isLoadingCreate && <LoaderSpinner />}
+      {isLoadingCreate && (
+        <LoaderSpinner customClass={styles.loaderContainer} />
+      )}
     </>
   );
 }

@@ -86,7 +86,7 @@ function Card(props) {
           <br />
           <span className={styles.postDate}>{createdAt}</span>
         </div>
-        {imgLoading && <LoaderSpinner />}
+        {imgLoading && <LoaderSpinner customClass={styles.loaderContainer} />}
         <img
           className={styles.userAvatar}
           style={imgLoading ? { display: 'none' } : {}}

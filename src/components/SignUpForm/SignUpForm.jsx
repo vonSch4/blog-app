@@ -86,7 +86,7 @@ function SignUpForm() {
                 pattern: {
                   value: /[a-z0-9]+@[a-z0-9]+\.[a-z0-9]+/,
                   message:
-                    'Must be a valid email. Only lowercase english letters and numbers.',
+                    'The email is incorrect. Use lowercase English letters and numbers.',
                 },
               })}
             />
@@ -169,7 +169,7 @@ function SignUpForm() {
           </Link>
         </span>
       </div>
-      {isLoading && <LoaderSpinner />}
+      {isLoading && <LoaderSpinner customClass={styles.loaderContainer} />}
     </>
   );
 }

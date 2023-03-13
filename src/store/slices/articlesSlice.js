@@ -23,6 +23,14 @@ const articlesSlice = createSlice({
     isError: false,
     error: null,
   },
+  reducers: {
+    clearArticles: (state) => {
+      state.articles = [];
+      state.isLoading = true;
+      state.isError = false;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchArticles.pending, (state) => {
       state.isLoading = true;
@@ -45,5 +53,7 @@ const articlesSlice = createSlice({
     });
   },
 });
+
+export const { clearArticles } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

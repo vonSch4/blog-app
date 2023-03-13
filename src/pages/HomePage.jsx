@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { fetchArticles } from '../store/slices/articlesSlice';
+import { fetchArticles, clearArticles } from '../store/slices/articlesSlice';
 import CardList from '../components/CardList';
 import LoaderSpinner from '../components/LoaderSpinner';
+import stylesSpinner from '../components/LoaderSpinner/LoaderSpinner.module.scss';
 import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
 import { getItem } from '../storage/storage';
 
@@ -28,10 +29,17 @@ function HomePage() {
         token: token || savedToken,
       })
     );
+
+    return () => dispatch(clearArticles());
   }, [dispatch, currentPage]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
-  const showSpinner = loading && <LoaderSpinner text='Загрузка статей...' />;
+  const showSpinner = loading && (
+    <LoaderSpinner
+      text='Загрузка...'
+      customClass={stylesSpinner.articleSpinner}
+    />
+  );
   const hasData = !(loading || isError);
   const showContent = hasData && <CardList />;
 

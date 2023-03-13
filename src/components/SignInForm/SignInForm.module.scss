@@ -22,9 +22,10 @@
 
 .label {
   width: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .labelCheckbox {
@@ -39,6 +40,9 @@
 }
 
 .inputErrorText {
+  width: 100%;
+  position: absolute;
+  transform: translateY(62px);
   font-size: 12px;
   color: #F5222D;
 }
@@ -89,4 +93,13 @@
 .link:visited,
 .link:link {
   color: #1890FF;
+}
+
+.loaderContainer {
+  position: absolute;
+  transform: translateY(50px);
+  background-color: #fff;
+  padding: 30px 50px;
+  box-shadow: 0px 2px 20px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }

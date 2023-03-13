@@ -33,7 +33,7 @@ function EditArticlePage() {
     }
 
     if (isCreated) {
-      navigate('/articles', { state: { from: location }, replace: true });
+      navigate(-1, { state: { from: location }, replace: true });
       dispatch(resetIsCreated());
     }
   });

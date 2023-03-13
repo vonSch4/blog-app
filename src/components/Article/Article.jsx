@@ -25,6 +25,8 @@ function Article() {
   const username = useSelector((state) => state.user.user.username);
   const isDeleted = useSelector((state) => state.article.isDeleted);
   const isLoading = useSelector((state) => state.article.isLoading);
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const token = useSelector((state) => state.user.user.token);
 
   const transformedArticle = transformArticleData(article);
   const {
@@ -39,25 +41,22 @@ function Article() {
     author,
   } = transformedArticle;
 
+  const [liked, setLiked] = useState(favorited);
+  const [likeCount, setLikeCount] = useState(favoritesCount);
+  const [imgLoading, setImgLoading] = useState(true);
+
   const tags = tagList.map((tag) => (
     <li key={nanoid()} className={styles.tag}>
       {tag.trim()}
     </li>
   ));
 
-  const isLogin = useSelector((state) => state.user.isLogin);
-  const token = useSelector((state) => state.user.user.token);
-
-  const [liked, setLiked] = useState(favorited);
-  const [likeCount, setLikeCount] = useState(favoritesCount);
-  const [imgLoading, setImgLoading] = useState(true);
-
   useEffect(() => {
     setLiked(favorited);
   }, [favorited]);
 
   useEffect(() => {
-    if (isDeleted) navigate('/articles');
+    if (isDeleted) navigate('/articles', { replace: true });
 
     return () => dispatch(resetIsDeleted());
   }, [dispatch, navigate, isDeleted]);
@@ -162,7 +161,7 @@ function Article() {
         <ReactMarkdown>{body}</ReactMarkdown>
       </div>
 
-      {isLoading && <LoaderSpinner />}
+      {isLoading && <LoaderSpinner customClass={styles.loaderContainer} />}
     </div>
   );
 }

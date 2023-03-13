@@ -5,7 +5,9 @@ import { useParams } from 'react-router-dom';
 import { fetchArticle } from '../store/slices/articleSlice';
 import Article from '../components/Article';
 import LoaderSpinner from '../components/LoaderSpinner';
+import stylesSpinner from '../components/LoaderSpinner/LoaderSpinner.module.scss';
 import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
+import { getItem } from '../storage/storage';
 
 function ArticlePage() {
   const dispatch = useDispatch();
@@ -16,13 +18,21 @@ function ArticlePage() {
   const isError = useSelector((state) => state.article.isError);
 
   const token = useSelector((state) => state.user.user.token);
+  const savedToken = getItem('token');
 
   useEffect(() => {
-    dispatch(fetchArticle({ slug, token }));
-  }, [dispatch, slug, token]);
+    if (savedToken) dispatch(fetchArticle({ slug, token }));
+
+    if (!savedToken) dispatch(fetchArticle({ slug, token }));
+  }, [dispatch, slug, token, savedToken]);
 
   const showError = error !== null && isError && <ErrorMessage error={error} />;
-  const showSpinner = loading && <LoaderSpinner text='Загрузка статьи...' />;
+  const showSpinner = loading && (
+    <LoaderSpinner
+      text='Загрузка...'
+      customClass={stylesSpinner.articleSpinner}
+    />
+  );
   const hasData = !(loading || isError);
   const showContent = hasData && <Article />;
 
