@@ -133,6 +133,11 @@
   box-shadow: 0 0 0 1.3px #1890FF;
 }
 
+.addTagBtn:hover {
+  color: #fff;
+  background-color: #1890FF;
+}
+
 .deleteTagBtn {
   color: #F5222D;
   border: 1px solid #F5222D;
@@ -145,6 +150,10 @@
   box-shadow: 0 0 0 1.3px #F5222D;
 }
 
+.deleteTagBtn:hover {
+  color: #fff;
+  background-color: #F5222D;
+}
 
 .linkSignIn {
   color: #8C8C8C;
