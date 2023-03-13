@@ -129,6 +129,8 @@ function EditProfileForm() {
               className={styles.input}
               type='text'
               placeholder='Username'
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               {...register('username', {
                 required: {
                   value: true,

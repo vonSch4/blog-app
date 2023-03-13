@@ -102,6 +102,8 @@ function NewArticleForm() {
               className={styles.input}
               type='text'
               placeholder='Title'
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               {...register('title', {
                 required: {
                   value: true,

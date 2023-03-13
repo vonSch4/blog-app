@@ -20,6 +20,10 @@
   border: 1px solid transparent;
 }
 
+.link:focus-visible {
+  box-shadow: 0 0 0 1.3px #000;
+}
+
 .articlesLink {
   margin-right: auto;
 }
@@ -28,6 +32,11 @@
   color: #52C41A !important;
   border: 1px solid #52C41A;
   margin-right: 15px;
+}
+
+.createArticleLink:focus-visible {
+  box-shadow: 0 0 0 1.3px #52C41A;
+  border: 1px solid #52C41A;
 }
 
 .editProfileLink {
@@ -46,6 +55,11 @@
   margin-left: 25px;
   color: #52C41A;
   border-color: #52C41A;
+}
+
+.signUpLink:focus-visible {
+  box-shadow: 0 0 0 1.3px #52C41A;
+  border: 1px solid #52C41A;
 }
 
 .link:hover {

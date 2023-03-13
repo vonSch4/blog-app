@@ -45,6 +45,8 @@ function SignInForm() {
               className={styles.input}
               type='email'
               placeholder='Email'
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               {...register('email', {
                 required: {
                   value: true,

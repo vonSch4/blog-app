@@ -117,7 +117,11 @@
   border: 1px solid #F5222D;
   border-radius: 5px;
   padding: 8px 15px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+
+.btnDelete:focus {
+  box-shadow: 0 0 0 1.3px #F5222D;
 }
 
 .btnEdit {
@@ -126,6 +130,10 @@
   border-radius: 5px;
   padding: 8px 15px;
   transition: all 0.15s ease-in-out;
+}
+
+.btnEdit:focus {
+  box-shadow: 0 0 0 1.3px #52C41A;
 }
 
 .btnDelete:hover,
@@ -192,8 +200,14 @@
 }
 
 /* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
-.likeBtn>input:focus:not(:checked)+span::before {
-  border-color: #80bdff;
+.likeBtn>input:focus-visible:not(:checked)+span::before {
+  border-radius: 15%;
+  box-shadow: 0 0 0 1.3px lightgray;
+}
+
+.likeBtn>input:focus-visible:checked+span::before {
+  border-radius: 15%;
+  box-shadow: 0 0 0 1.3px lightgray;
 }
 
 /* стили для чекбокса, находящегося в состоянии checked */
@@ -229,6 +243,10 @@
   transition: all 0.15s ease-in-out;
 }
 
+.btnNo:focus {
+  box-shadow: 0 0 0 1.3px #000;
+}
+
 .btnYes {
   color: #fff;
   background-color: #1890FF;
@@ -236,6 +254,10 @@
   padding: 5px 10px;
   border-radius: 5px;
   transition: all 0.15s ease-in-out;
+}
+
+.btnYes:focus {
+  box-shadow: 0 0 0 1.3px #000;
 }
 
 .btnNo:hover {

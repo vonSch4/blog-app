@@ -114,13 +114,15 @@ function EditArticleForm() {
           onSubmit={handleSubmit(onSubmit)}
           className={styles.newArticleForm}
         >
-          <legend className={styles.formLegend}>Create new article</legend>
+          <legend className={styles.formLegend}>Edit article</legend>
           <label className={styles.label}>
             <span className={styles.inputLabelText}>Title</span>
             <input
               className={styles.input}
               type='text'
               placeholder='Title'
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               {...register('title', {
                 required: {
                   value: true,
