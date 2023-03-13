@@ -44,6 +44,11 @@ a.titleText:visited {
   color: #c918ff;
 }
 
+a.titleText:focus-visible {
+  border-radius: 2px;
+  box-shadow: 0 0 0 1.3px lightgray;
+}
+
 .tagsList {
   display: flex;
   justify-content: flex-start;
@@ -83,10 +88,13 @@ a.titleText:visited {
 
 .userName {
   white-space: nowrap;
+  font-size: 20px;
 }
 
 .postDate {
   white-space: nowrap;
+  color: grey;
+  font-size: 14px;
 }
 
 .userAvatar {
@@ -94,6 +102,7 @@ a.titleText:visited {
   height: 45px;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid lightgrey;
 }
 
 
@@ -135,8 +144,14 @@ a.titleText:visited {
 }
 
 /* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
-.likeBtn>input:focus:not(:checked)+span::before {
-  border-color: #80bdff;
+.likeBtn>input:focus-visible:not(:checked)+span::before {
+  border-radius: 15%;
+  box-shadow: 0 0 0 1.3px lightgray;
+}
+
+.likeBtn>input:focus-visible:checked+span::before {
+  border-radius: 15%;
+  box-shadow: 0 0 0 1.3px lightgray;
 }
 
 /* стили для чекбокса, находящегося в состоянии checked */

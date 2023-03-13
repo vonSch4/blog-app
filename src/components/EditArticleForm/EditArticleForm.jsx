@@ -76,6 +76,11 @@ function EditArticleForm() {
                     'The tag is already contained in the list.'
                   );
                 },
+                emptyTag: (value) => {
+                  const tag = value.trim();
+
+                  return tag !== '' || 'The tag is empty.';
+                },
               },
             })}
           />
