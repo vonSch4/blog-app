@@ -16,7 +16,7 @@
   font-size: 18px;
   font-weight: 500;
   border-radius: 5px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.15s ease-in-out;
   border: 1px solid transparent;
   animation: linkOpen 0.2s ease-in-out;
 }
@@ -41,6 +41,12 @@
   margin-right: 15px;
 }
 
+.createArticleLink:hover {
+  color: #fff !important;
+  border: 1px solid #52C41A;
+  background-color: #52C41A;
+}
+
 .createArticleLink:focus-visible {
   box-shadow: 0 0 0 1.3px #52C41A;
   border: 1px solid #52C41A;
@@ -58,10 +64,22 @@
   border: 1px solid #2b2b2b;
 }
 
+.logOutLink:hover {
+  color: #fff !important;
+  border: 1px solid #F5222D;
+  background-color: #F5222D;
+}
+
 .signUpLink {
   margin-left: 25px;
   color: #52C41A;
   border-color: #52C41A;
+}
+
+.signUpLink:hover {
+  color: #fff !important;
+  border: 1px solid #52C41A;
+  background-color: #52C41A;
 }
 
 .signUpLink:focus-visible {

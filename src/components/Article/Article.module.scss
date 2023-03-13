@@ -150,11 +150,16 @@
   box-shadow: 0 0 0 1.3px #52C41A;
 }
 
-.btnDelete:hover,
+.btnDelete:hover {
+  color: #fff !important;
+  background-color: #F5222D;
+  border-color: #F5222D;
+}
+
 .btnEdit:hover {
-  color: #2b2b2b !important;
-  background-color: lightgray;
-  border-color: lightgray;
+  color: #fff !important;
+  background-color: #52C41A;
+  border-color: #52C41A;
 }
 
 .userName {
@@ -300,14 +305,14 @@
 }
 
 .btnNo:hover {
-  color: #F5222D !important;
-  background-color: #fff;
+  color: #fff !important;
+  background-color: #F5222D;
   border-color: #F5222D;
 }
 
 .btnYes:hover {
-  color: #52C41A !important;
-  background-color: #fff;
+  color: #fff !important;
+  background-color: #52C41A;
   border: 1px solid #52C41A;
 }
 
